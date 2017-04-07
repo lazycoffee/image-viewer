@@ -1,0 +1,7 @@
+{
+    "port": 3007,
+    "files": ["./test/**/*.*"],
+    "server": {
+        "baseDir": "./test"
+    }
+}

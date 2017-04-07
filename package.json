@@ -1,0 +1,33 @@
+{
+  "name": "lc-image-viewer",
+  "version": "1.0.0",
+  "description": "A image viewer",
+  "main": "ImageViewer.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "npm run lite",
+    "lite": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lazycoffee/lc-image-viewer.git"
+  },
+  "keywords": [
+    "image"
+  ],
+  "author": "JamesYin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lazycoffee/lc-image-viewer/issues"
+  },
+  "homepage": "https://github.com/lazycoffee/lc-image-viewer#readme",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
+  },
+  "dependencies": {
+    "tween.js": "^16.6.0"
+  }
+}
