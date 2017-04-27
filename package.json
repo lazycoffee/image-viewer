@@ -1,6 +1,6 @@
 {
-  "name": "lc-image-viewer",
-  "version": "1.0.1",
+  "name": "@flyme/image-viewer",
+  "version": "1.0.19",
   "description": "A image viewer",
   "main": "ImageViewer.js",
   "directories": {
@@ -9,6 +9,7 @@
   "scripts": {
     "start": "npm run lite",
     "lite": "lite-server",
+    "watch": "webpack ./test/test.js ./test/bundle.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,7 +26,7 @@
   },
   "homepage": "https://github.com/lazycoffee/lc-image-viewer#readme",
   "publishConfig": {
-    "registry": "http://registry.npmjs.org"
+    "registry": "http://172.16.16.135:7001"
   },
   "dependencies": {
     "tween.js": "^16.6.0"
