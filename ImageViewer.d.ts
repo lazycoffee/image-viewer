@@ -16,6 +16,8 @@ declare class ImageViewer {
     private _baseIndex;
     private _actionBarTitle;
     private _gestureScaleRatio;
+    private _closeCallback;
+    private _movable;
     private _minScaleRation;
     private _maxScaleRation;
     private _isAnimating;
@@ -45,9 +47,11 @@ declare class ImageViewer {
     private animateDefault();
     private animateMax();
     imageSrc: string;
+    movable: boolean;
     private show();
     open(img: HTMLImageElement): void;
-    private close();
+    closeCallback: () => void;
+    close(): void;
     private _startX;
     private _startY;
     private _imageRatio;

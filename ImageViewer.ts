@@ -11,6 +11,7 @@ class ImageViewer {
         this._windowWidth = window.innerWidth;
         this._windowHeight = window.innerHeight;
         this._widthRatio = this._windowWidth / 360;
+        this._movable = args.movable  === undefined ? true : args.movable;
         //wrapper
         this._wrapper = document.createElement('div');
         this._wrapper.classList.add('image-viewer');
@@ -152,6 +153,8 @@ class ImageViewer {
     private _baseIndex: number;
     private _actionBarTitle: string;
     private _gestureScaleRatio:number = 2;
+    private _closeCallback:()=>void;
+    private _movable:boolean;
     private _minScaleRation:number = 0.5;
     private _maxScaleRation:number = 2;
     private _isAnimating:boolean;
@@ -274,6 +277,9 @@ class ImageViewer {
     get imageSrc(){
         return this._imageSrc;
     }
+    set movable (movalbe: boolean){
+        this._movable = movalbe;
+    }
     private show(){
         let self = this;
         this._wrapper.style.display = 'block';
@@ -323,7 +329,10 @@ class ImageViewer {
         self.imageSrc = img.src;
         self._image.setAttribute('src', img.src);
     }
-    private close(){
+    set closeCallback(fn:()=>void){
+        this._closeCallback = fn;
+    }
+    public close(){
         let self = this;
         if(self._openMode === 'overlay'){
             this._backdrop.style.opacity = '0';
@@ -331,9 +340,9 @@ class ImageViewer {
         }else if(self._openMode === 'newPage'){
             this._wrapper.style.transform = 'translate3d(100%, 0, 0)';
         }
-
         setTimeout(function () {
             self._wrapper.style.display = 'none';
+            self._closeCallback && self._closeCallback();
         }, this._animationDuration);
     }
     private _startX:number = 0;
@@ -403,7 +412,7 @@ class ImageViewer {
             self._longTouchTrackX = event.touches[0].clientX;
             self._longTouchTrackY = event.touches[0].clientY;
             if(event.type === 'touchmove') {
-                if(self._touchMoveCount === 2 || self._hasTouchStart === false){
+                if(self._touchMoveCount === 2 || self._hasTouchStart === false || this._movable === false){
                     return;
                 }
                 self._touchMoveCount = 1;

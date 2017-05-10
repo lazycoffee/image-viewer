@@ -106,6 +106,7 @@ var ImageViewer = (function () {
         this._windowWidth = window.innerWidth;
         this._windowHeight = window.innerHeight;
         this._widthRatio = this._windowWidth / 360;
+        this._movable = args.movable === undefined ? true : args.movable;
         //wrapper
         this._wrapper = document.createElement('div');
         this._wrapper.classList.add('image-viewer');
@@ -336,6 +337,13 @@ var ImageViewer = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ImageViewer.prototype, "movable", {
+        set: function (movalbe) {
+            this._movable = movalbe;
+        },
+        enumerable: true,
+        configurable: true
+    });
     ImageViewer.prototype.show = function () {
         var self = this;
         this._wrapper.style.display = 'block';
@@ -386,6 +394,13 @@ var ImageViewer = (function () {
         self.imageSrc = img.src;
         self._image.setAttribute('src', img.src);
     };
+    Object.defineProperty(ImageViewer.prototype, "closeCallback", {
+        set: function (fn) {
+            this._closeCallback = fn;
+        },
+        enumerable: true,
+        configurable: true
+    });
     ImageViewer.prototype.close = function () {
         var self = this;
         if (self._openMode === 'overlay') {
@@ -397,6 +412,7 @@ var ImageViewer = (function () {
         }
         setTimeout(function () {
             self._wrapper.style.display = 'none';
+            self._closeCallback && self._closeCallback();
         }, this._animationDuration);
     };
     Object.defineProperty(ImageViewer.prototype, "downloadIconText", {
@@ -457,7 +473,7 @@ var ImageViewer = (function () {
             self._longTouchTrackX = event.touches[0].clientX;
             self._longTouchTrackY = event.touches[0].clientY;
             if (event.type === 'touchmove') {
-                if (self._touchMoveCount === 2 || self._hasTouchStart === false) {
+                if (self._touchMoveCount === 2 || self._hasTouchStart === false || this._movable === false) {
                     return;
                 }
                 self._touchMoveCount = 1;
@@ -1699,6 +1715,7 @@ TWEEN.Interpolation = {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ImageViewer = __webpack_require__(0);
 var imageViewer = new ImageViewer();
+imageViewer.movable = false;
 document.getElementsByClassName('image')[0].addEventListener('click', function (event) {
     imageViewer.open(event.target);
 });
